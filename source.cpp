@@ -67,8 +67,7 @@ int main()
 void singlePlayer()
 {
 	cout<<"Coming Soon!\n";
-	cout << "Press any key to continue";
-	cin.get();
+	cout << "Press Enter to continue";
 	cin.ignore();
 	system(getAction());
 }
@@ -129,7 +128,7 @@ void multiPlayer()
 			cout<<(i%2==0?name1:name2);
 			N.win=(i%2==0?1:2);
 			cout<<" wins!\n";
-			cout << "Press any key to continue";
+			cout << "Press enter to continue";
 			cin.get();
 			cin.ignore();
 			system(getAction());
@@ -140,7 +139,7 @@ void multiPlayer()
 	if(!check(A))
 	{
 		cout<<"Match Tie!\n";
-		cout << "Press any key to continue";
+		cout << "Press Enter to continue";
 		cin.get();
 		cin.ignore();
 		system(getAction());
@@ -177,7 +176,8 @@ void logger()
 	}
 	fin.close();
 	cout<<"\n###########################################################################"<<endl;
-	system("pause");
+	cout<<"Press Enter to continue...";
+	cin.ignore();
 	system(getAction());
 }
 void printGrid(char A[3][3])
