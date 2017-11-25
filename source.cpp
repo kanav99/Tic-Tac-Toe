@@ -1,5 +1,18 @@
 #include<bits/stdc++.h>
+
 using namespace std;
+
+const char* getAction()
+{
+    #ifdef _WIN32
+    return "cls";
+    #elif _WIN64
+    return "cls";
+    #elif __linux__
+    return "clear";
+    #endif
+}  
+
 class Match
 {
 	public:
@@ -42,7 +55,7 @@ int main()
 	cout<<"Enter the choice>>";
 	cin>>x;
 	cin.get();
-	system("cls");
+	system(getAction());
 	if(x==1)
 		singlePlayer();
 	else if(x==2)
@@ -54,8 +67,10 @@ int main()
 void singlePlayer()
 {
 	cout<<"Coming Soon!\n";
-	system("pause");
-	system("cls");
+	cout << "Press any key to continue";
+	cin.get();
+	cin.ignore();
+	system(getAction());
 }
 void multiPlayer()
 {
@@ -64,10 +79,10 @@ void multiPlayer()
 	char name1[50];
 	char name2[50];
 	cout<<"Enter Player 1's name>>";
-	gets(name1);
+	cin.getline(name1, 50);
 	cout<<"\nEnter Player 2's name>>";
-	gets(name2);
-    system("cls");
+	cin.getline(name2, 50);
+ 	system(getAction());
 	
 	Match N(name1,name2);
 	for(i=0;i<9;i++){
@@ -81,6 +96,10 @@ void multiPlayer()
 		if(i%2==0){
 			cout<<name1<<"- Make a move>>";
 			cin>>ch;
+			while(ch < 0 || ch > 8) {
+				cout << "Invalid number entered! Enter again>>";
+				cin >> ch;
+			}
 			while(A[ch/3][ch%3]=='X'||A[ch/3][ch%3]=='O')
 			{
 				cout<<"Invalid Move! Try Again>>";
@@ -91,6 +110,10 @@ void multiPlayer()
 		else{
 			cout<<name2<<"- Make a move>>";
 			cin>>ch;
+			while(ch < 0 || ch > 8) {
+				cout << "Invalid number entered! Enter again>>";
+				cin >> ch;
+			}
 			while(A[ch/3][ch%3]=='X'||A[ch/3][ch%3]=='O')
 			{
 				cout<<"Invalid Move! Try Again>>";
@@ -100,23 +123,27 @@ void multiPlayer()
 		}
 		N.A[i]=ch;
 		if(check(A))
-		{
-			system("cls");
+		{	
+			system(getAction());
 			printGrid(A);
 			cout<<(i%2==0?name1:name2);
 			N.win=(i%2==0?1:2);
 			cout<<" wins!\n";
-			system("pause");
-			system("cls");
+			cout << "Press any key to continue";
+			cin.get();
+			cin.ignore();
+			system(getAction());
 			break;
 		}
-	system("cls");
+	system(getAction());
 	}
 	if(!check(A))
 	{
 		cout<<"Match Tie!\n";
-		system("pause");
-		system("cls");
+		cout << "Press any key to continue";
+		cin.get();
+		cin.ignore();
+		system(getAction());
 		N.win=0;
 	}
 	fstream fout;
@@ -151,7 +178,7 @@ void logger()
 	fin.close();
 	cout<<"\n###########################################################################"<<endl;
 	system("pause");
-	system("cls");
+	system(getAction());
 }
 void printGrid(char A[3][3])
 {
