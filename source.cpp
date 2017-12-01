@@ -1,3 +1,4 @@
+
 #include<bits/stdc++.h>
 
 using namespace std;
@@ -31,39 +32,58 @@ class Match
 		strcpy(p2,"");
 	}
 };
+
+
+
 //int ml[][9];
-//int matches;
 void loadArray();
 void singlePlayer();
 void multiPlayer();
 void printGrid(char A[3][3]);
 void logger();
+void logger(int &c);				//to count matches
 bool check(char A[3][3]);
+
+
+
+
+
 int main()
 {
+	int matches=0;
 	loadArray();
 	int x;
-	do{
-	cout<<"###########################################################################"<<endl;
-	cout<<"-------------------------TIC TAC TOE(SELF LEARNING)------------------------"<<endl;
-	cout<<"###########################################################################"<<endl;
-	cout<<"                           1. Single Player                                "<<endl;
-	cout<<"                           2. Two Player                                   "<<endl;
-	cout<<"                           3. Log                                          "<<endl;
-	cout<<"                           4. Exit                                         "<<endl;
-	cout<<"                     Number of Times Played= "<</*matches<<*/endl;
-	cout<<"Enter the choice>>";
-	cin>>x;
-	cin.get();
-	system(getAction());
-	if(x==1)
-		singlePlayer();
-	else if(x==2)
-		multiPlayer();
-	else if(x==3)
-		logger();
-	}while(x!=4);
+	logger(matches);
+	do
+	{
+
+	cout<<"hello1\n";
+		cout<<"###########################################################################"<<endl;
+		cout<<"-------------------------TIC TAC TOE(SELF LEARNING)------------------------"<<endl;
+		cout<<"###########################################################################"<<endl;
+		cout<<"                           1. Single Player                                "<<endl;
+		cout<<"                           2. Two Player                                   "<<endl;
+		cout<<"                           3. Log                                          "<<endl;
+		cout<<"                           4. Exit                                         "<<endl;
+		cout<<"                     Number of Times Played= "<<matches<<endl;		//added noofmatches
+		cout<<"Enter the choice>>";
+		cin>>x;
+		cin.get();
+		system(getAction());
+		if(x==1)
+			singlePlayer();
+		else if(x==2){
+			multiPlayer();
+			matches++;
+		}
+		else if(x==3)
+			logger();
+	}
+	while(x!=4);
 }
+
+
+
 void singlePlayer()
 {
 	cout<<"Coming Soon!\n";
@@ -71,6 +91,9 @@ void singlePlayer()
 	cin.ignore();
 	system(getAction());
 }
+
+
+
 void multiPlayer()
 {
 	char A[3][3];
@@ -78,12 +101,13 @@ void multiPlayer()
 	char name1[50];
 	char name2[50];
 	cout<<"Enter Player 1's name>>";
-	cin.getline(name1, 50);
+	cin.getline(name1,50);
 	cout<<"\nEnter Player 2's name>>";
-	cin.getline(name2, 50);
+	cin.getline(name2,50);
  	system(getAction());
 	
 	Match N(name1,name2);
+
 	for(i=0;i<9;i++){
 	A[i/3][i%3]=i+48;
 	N.A[i]=-1;
@@ -95,28 +119,18 @@ void multiPlayer()
 		if(i%2==0){
 			cout<<name1<<"- Make a move>>";
 			cin>>ch;
-			while(ch < 0 || ch > 8) {
+			while(ch < 0 || ch > 8 || A[ch/3][ch%3]=='X'||A[ch/3][ch%3]=='O' ) {		//bug fixed
 				cout << "Invalid number entered! Enter again>>";
 				cin >> ch;
-			}
-			while(A[ch/3][ch%3]=='X'||A[ch/3][ch%3]=='O')
-			{
-				cout<<"Invalid Move! Try Again>>";
-				cin>>ch;
 			}
 			A[ch/3][ch%3]='X';	
 		}
 		else{
 			cout<<name2<<"- Make a move>>";
 			cin>>ch;
-			while(ch < 0 || ch > 8) {
+			while(ch < 0 || ch > 8 || A[ch/3][ch%3]=='X' || A[ch/3][ch%3]=='O') {		//bug fixed
 				cout << "Invalid number entered! Enter again>>";
 				cin >> ch;
-			}
-			while(A[ch/3][ch%3]=='X'||A[ch/3][ch%3]=='O')
-			{
-				cout<<"Invalid Move! Try Again>>";
-				cin>>ch;
 			}
 			A[ch/3][ch%3]='O';
 		}
@@ -151,6 +165,9 @@ void multiPlayer()
 	fout.close();
 	
 }
+
+
+
 void logger()
 {
 	Match A;
@@ -180,6 +197,18 @@ void logger()
 	cin.ignore();
 	system(getAction());
 }
+
+void logger(int &c)
+{
+	Match A;
+	fstream fin;
+	fin.open("log",ios::in|ios::binary);
+	while(fin.read((char*)&A,sizeof(A))){
+		c++;
+	}
+	fin.close();
+}
+
 void printGrid(char A[3][3])
 {
 	cout<<"###########################################################################"<<endl;
@@ -192,6 +221,8 @@ void printGrid(char A[3][3])
 	cout<<"                             |         |                                   "<<endl;
 	cout<<"###########################################################################"<<endl;
 }
+
+
 bool check(char A[3][3])
 {
 	int i,j;
@@ -205,6 +236,8 @@ bool check(char A[3][3])
 	if((A[0][2]==A[1][1])&&(A[1][1]==A[2][0])) return true;
 	return false;
 }
+
+
 void loadArray()
 {
 	/*fstream fin;
